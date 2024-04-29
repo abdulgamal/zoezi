@@ -33,12 +33,15 @@ function ProductsContextProvider({ children }) {
     setCartProducts(newProducts);
   };
 
+  const clearCartProducts = () => setCartProducts([]);
+
   return (
     <ProductContext.Provider
       value={{
         cartProducts,
         addToCartProducts,
         removeFromCartProducts,
+        clearCartProducts,
       }}
     >
       {children}

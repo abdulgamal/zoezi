@@ -1,6 +1,6 @@
 import { useProductsContext } from "../../context/ProductsContextProvider";
 
-function Navbar() {
+function Navbar({ setIsModelOpen }) {
   const { cartProducts } = useProductsContext();
 
   return (
@@ -11,6 +11,7 @@ function Navbar() {
           <button
             type="button"
             className="relative inline-flex items-center px-2.5 py-1.5 text-sm font-medium text-center text-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+            onClick={() => setIsModelOpen(true)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
