@@ -1,7 +1,10 @@
-import { useProductsContext } from "../../context/ProductsContextProvider";
+import { useDispatch } from "react-redux";
+import { addToCartProducts } from "../../Redux/features/products/productSlice";
+// import { useProductsContext } from "../../context/ProductsContextProvider";
 
 function ProductCard({ product }) {
-  const { addToCartProducts } = useProductsContext();
+  // const { addToCartProducts } = useProductsContext();
+  const dispatch = useDispatch();
   return (
     <div>
       <div className="bg-[#F2F2F2] p-3 rounded-md mb-2 flex flex-col justify-center items-center h-56 relative">
@@ -39,7 +42,7 @@ function ProductCard({ product }) {
           <p className="font-semibold tracking-wide">${product?.price}</p>
         </div>
         <div
-          onClick={() => addToCartProducts(product)}
+          onClick={() => dispatch(addToCartProducts(product))}
           className="p-2 rounded-full border border-gray-300 hover:scale-110 cursor-pointer"
         >
           <svg

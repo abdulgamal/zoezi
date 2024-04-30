@@ -1,7 +1,9 @@
-import { useProductsContext } from "../../context/ProductsContextProvider";
+import { useSelector } from "react-redux";
+// import { useProductsContext } from "../../context/ProductsContextProvider";
 
 function Navbar({ setIsModelOpen }) {
-  const { cartProducts } = useProductsContext();
+  // const { cartProducts } = useProductsContext();
+  const { products: cartProducts } = useSelector((state) => state);
 
   return (
     <nav className="bg-white fixed top-0 right-0 left-0 z-50">
