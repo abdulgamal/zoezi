@@ -1,13 +1,18 @@
-import { useDispatch } from "react-redux";
-import {
-  addToCartProducts,
-  removeFromCartProducts,
-} from "../../Redux/features/products/productSlice";
+// import { useDispatch } from "react-redux";
+// import {
+//   addToCartProducts,
+//   removeFromCartProducts,
+// } from "../../Redux/features/products/productSlice";
+import { useProductStore } from "../../zustand/productsStore";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
 
 function CartCard({ product }) {
   // const { addToCartProducts, removeFromCartProducts } = useProductsContext();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const addToCartProducts = useProductStore((state) => state.addToCartProducts);
+  const removeFromCartProducts = useProductStore(
+    (state) => state.removeFromCartProducts
+  );
   return (
     <li className="flex items-center gap-4">
       <img
@@ -26,7 +31,7 @@ function CartCard({ product }) {
       <div className="flex flex-1 items-center justify-end gap-2">
         <button
           className="text-gray-600 transition hover:text-teal-600"
-          onClick={() => dispatch(addToCartProducts(product))}
+          onClick={() => addToCartProducts(product)}
         >
           <span className="sr-only">Add item</span>
 
@@ -50,7 +55,7 @@ function CartCard({ product }) {
         </p>
         <button
           className="text-gray-600 transition hover:text-red-600"
-          onClick={() => dispatch(removeFromCartProducts(product))}
+          onClick={() => removeFromCartProducts(product)}
         >
           <span className="sr-only">Remove item</span>
 

@@ -1,12 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
 import CartCard from "./CartCard";
-import { clearCartProducts } from "../../Redux/features/products/productSlice";
+// import { clearCartProducts } from "../../Redux/features/products/productSlice";
+import { useProductStore } from "../../zustand/productsStore";
 
 function Modal({ isModelOpen, setIsModelOpen }) {
   // const { cartProducts, clearCartProducts } = useProductsContext();
-  const { products: cartProducts } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  // const { products: cartProducts } = useSelector((state) => state);
+  const cartProducts = useProductStore((state) => state.cartProducts);
+  const clearCartProducts = useProductStore((state) => state.clearCartProducts);
+  // const dispatch = useDispatch();
   let total = cartProducts.reduce(
     (acc, curr) => curr.price * curr.qty + acc,
     0
@@ -75,7 +78,7 @@ function Modal({ isModelOpen, setIsModelOpen }) {
               data-modal-hide="default-modal"
               type="button"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-              onClick={() => dispatch(clearCartProducts())}
+              onClick={clearCartProducts}
             >
               Checkout
             </button>

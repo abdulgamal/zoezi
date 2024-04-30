@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+import { useProductStore } from "../../zustand/productsStore";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
 
 function Navbar({ setIsModelOpen }) {
   // const { cartProducts } = useProductsContext();
-  const { products: cartProducts } = useSelector((state) => state);
-
+  // const { products: cartProducts } = useSelector((state) => state);
+  const cartProducts = useProductStore((state) => state.cartProducts);
   return (
     <nav className="bg-white fixed top-0 right-0 left-0 z-50">
       <div className="container mx-auto px-4 py-2 flex items-center justify-between">
