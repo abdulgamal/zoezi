@@ -1,12 +1,30 @@
 // import { useDispatch } from "react-redux";
 // import { addToCartProducts } from "../../Redux/features/products/productSlice";
-import { useProductStore } from "../../zustand/productsStore";
+// import { useProductStore } from "../../zustand/productsStore";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
+
+import { useRecoilState } from "recoil";
+import { cartProductsState } from "../../recoil/cartStore";
 
 function ProductCard({ product }) {
   // const { addToCartProducts } = useProductsContext();
-  const addToCartProducts = useProductStore((state) => state.addToCartProducts);
+  // const addToCartProducts = useProductStore((state) => state.addToCartProducts);
   // const dispatch = useDispatch();
+  const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
+
+  const addToCartProducts = (prod) => {
+    let existingProduct = cartProducts.find((item) => item.id === prod.id);
+    if (existingProduct) {
+      let newProducts = cartProducts.map((product) =>
+        product.id === prod.id ? { ...product, qty: product.qty + 1 } : product
+      );
+      setCartProducts(newProducts);
+    } else {
+      let newProduct = { ...product, qty: 1 };
+      setCartProducts((prevProducts) => [...prevProducts, newProduct]);
+    }
+  };
+
   return (
     <div>
       <div className="bg-[#F2F2F2] p-3 rounded-md mb-2 flex flex-col justify-center items-center h-56 relative">

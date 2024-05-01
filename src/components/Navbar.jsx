@@ -1,11 +1,14 @@
 // import { useSelector } from "react-redux";
-import { useProductStore } from "../../zustand/productsStore";
+import { useRecoilValue } from "recoil";
+// import { useProductStore } from "../../zustand/productsStore";
+import { cartProductsState } from "../../recoil/cartStore";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
 
 function Navbar({ setIsModelOpen }) {
   // const { cartProducts } = useProductsContext();
   // const { products: cartProducts } = useSelector((state) => state);
-  const cartProducts = useProductStore((state) => state.cartProducts);
+  // const cartProducts = useProductStore((state) => state.cartProducts);
+  const cartProducts = useRecoilValue(cartProductsState);
   return (
     <nav className="bg-white fixed top-0 right-0 left-0 z-50">
       <div className="container mx-auto px-4 py-2 flex items-center justify-between">

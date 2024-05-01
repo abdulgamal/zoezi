@@ -1,19 +1,25 @@
 // import { useDispatch, useSelector } from "react-redux";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
+import { useRecoilState } from "recoil";
 import CartCard from "./CartCard";
+import { cartProductsState } from "../../recoil/cartStore";
 // import { clearCartProducts } from "../../Redux/features/products/productSlice";
-import { useProductStore } from "../../zustand/productsStore";
+// import { useProductStore } from "../../zustand/productsStore";
 
 function Modal({ isModelOpen, setIsModelOpen }) {
   // const { cartProducts, clearCartProducts } = useProductsContext();
   // const { products: cartProducts } = useSelector((state) => state);
-  const cartProducts = useProductStore((state) => state.cartProducts);
-  const clearCartProducts = useProductStore((state) => state.clearCartProducts);
+  // const cartProducts = useProductStore((state) => state.cartProducts);
+  // const clearCartProducts = useProductStore((state) => state.clearCartProducts);
   // const dispatch = useDispatch();
+  const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
+
   let total = cartProducts.reduce(
     (acc, curr) => curr.price * curr.qty + acc,
     0
   );
+
+  const clearCartProducts = () => setCartProducts([]);
   return (
     <div
       id="default-modal"

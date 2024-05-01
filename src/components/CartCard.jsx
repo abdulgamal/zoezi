@@ -3,16 +3,48 @@
 //   addToCartProducts,
 //   removeFromCartProducts,
 // } from "../../Redux/features/products/productSlice";
-import { useProductStore } from "../../zustand/productsStore";
+import { useRecoilState } from "recoil";
+// import { useProductStore } from "../../zustand/productsStore";
+import { cartProductsState } from "../../recoil/cartStore";
 // import { useProductsContext } from "../../context/ProductsContextProvider";
 
 function CartCard({ product }) {
   // const { addToCartProducts, removeFromCartProducts } = useProductsContext();
   // const dispatch = useDispatch();
-  const addToCartProducts = useProductStore((state) => state.addToCartProducts);
-  const removeFromCartProducts = useProductStore(
-    (state) => state.removeFromCartProducts
-  );
+  // const addToCartProducts = useProductStore((state) => state.addToCartProducts);
+  // const removeFromCartProducts = useProductStore(
+  //   (state) => state.removeFromCartProducts
+  // );
+  const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
+
+  const addToCartProducts = (prod) => {
+    let existingProduct = cartProducts.find((item) => item.id === prod.id);
+    if (existingProduct) {
+      let newProducts = cartProducts.map((product) =>
+        product.id === prod.id ? { ...product, qty: product.qty + 1 } : product
+      );
+      setCartProducts(newProducts);
+    } else {
+      let newProduct = { ...product, qty: 1 };
+      setCartProducts((prevProducts) => [...prevProducts, newProduct]);
+    }
+  };
+
+  const removeFromCartProducts = (prod) => {
+    let qtyIsOne = prod.qty === 1;
+    if (qtyIsOne) {
+      let newProducts = cartProducts.filter(
+        (product) => product.id !== prod.id
+      );
+      setCartProducts(newProducts);
+    } else {
+      let newProducts = cartProducts.map((product) =>
+        product.id === prod.id ? { ...product, qty: product.qty - 1 } : product
+      );
+      setCartProducts(newProducts);
+    }
+  };
+
   return (
     <li className="flex items-center gap-4">
       <img
